@@ -1,20 +1,35 @@
+//Bibliotecas
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Welcome } from './src/Components/Welcome';
+import AppLoading from 'expo-app-loading';
+import { ThemeProvider } from 'styled-components/native';
+
+import {
+  useFonts,
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_700Bold
+} from '@expo-google-fonts/poppins';
+
+//Componentes
+import theme from './src/global/styles/theme';
+import { Dashboard } from './src/screens/Dashboard';
 
 export default function App() {
+  const [fontsLoading] = useFonts({
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_700Bold
+  });
+
+  if (!fontsLoading) {
+    return <AppLoading />
+  }
+
   return (
-    <View style={styles.container}>
-      < Welcome title="React Native Bare Workflow com Typescript" />
-    </View>
-  );
+    <ThemeProvider theme={theme}>
+      <Dashboard />
+    </ThemeProvider>
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
